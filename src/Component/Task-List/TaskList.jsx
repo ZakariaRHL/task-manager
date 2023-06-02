@@ -1,17 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
-import { updateTask } from "../../store/task-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { updateTask, deleteTask } from "../../store/task-slice";
 
 import "./taskList.css";
 
-const TaskList = ({ data }) => {
+const TaskList = ({ data, handleEdit }) => {
   const { id, title, description } = data;
   const dispatch = useDispatch();
-
-  const update = () => {
-    dispatch(updateTask(data));
-  };
 
   return (
     <div className="container-list" key={id}>
@@ -24,7 +20,7 @@ const TaskList = ({ data }) => {
           variant="contained"
           color="success"
           sx={{ color: "white" }}
-          onClick={update}
+          onClick={handleEdit}
         >
           Update
         </Button>
@@ -32,6 +28,7 @@ const TaskList = ({ data }) => {
           variant="contained"
           color="error"
           sx={{ margin: "12px", color: "white" }}
+          onClick={() => dispatch(deleteTask(id))}
         >
           Remove
         </Button>
